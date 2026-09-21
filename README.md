@@ -1,5 +1,5 @@
-# DonaDrops Wiki
-© 2026 DonaDrops Wiki. All rights reserved.
+# zDPlayerLocation Wiki
+© 2026 zDPlayerLocation Wiki. All rights reserved.
 
 
 **Dueño**: Donatier `(@donatier_)`
