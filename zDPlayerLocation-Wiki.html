@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>zDPlayerLocation - Wiki</title>
+<style>
+  :root {
+    --bg: #0c0c0c;
+    --bg-panel: #161616;
+    --border: #2a2a2a;
+    --orange: #ff9800;
+    --orange-dark: #cc6d00;
+    --text: #dcdcdc;
+    --text-dim: #9a9a9a;
+    --code-bg: #1c1c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.6;
+  }
+  .layout { display: flex; min-height: 100vh; }
+  nav {
+    width: 250px;
+    background: var(--bg-panel);
+    border-right: 1px solid var(--border);
+    padding: 24px 16px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  nav h2 { color: var(--orange); font-size: 18px; letter-spacing: 1px; margin-top: 0; }
+  nav a {
+    display: block;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  nav a:hover { background: #222; color: var(--orange); }
+  main { flex: 1; padding: 40px 60px; max-width: 900px; }
+  .hero {
+    background: linear-gradient(160deg, #1a1a1a 0%, #100a00 100%);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--orange);
+    border-radius: 8px;
+    padding: 32px;
+    margin-bottom: 40px;
+  }
+  h1 { color: var(--orange); font-size: 34px; margin: 0 0 4px; }
+  .subtitle { color: var(--text-dim); margin-top: 0; margin-bottom: 18px; }
+  .hero p.lead { font-size: 15px; color: var(--text); max-width: 640px; }
+  h2 { color: var(--orange); border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-top: 48px; }
+  h3 { color: var(--orange-dark); margin-top: 28px; }
+  p, li { color: var(--text); }
+  code {
+    background: var(--code-bg);
+    color: #ffb74d;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "Consolas", monospace;
+    font-size: 13px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--orange);
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-family: "Consolas", monospace;
+    font-size: 13px;
+    color: #e0e0e0;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+  th, td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; font-size: 14px; }
+  th { background: #1e1e1e; color: var(--orange); }
+  tr:nth-child(even) { background: #131313; }
+  .badge {
+    display: inline-block;
+    background: #1e1e1e;
+    border: 1px solid var(--orange-dark);
+    color: var(--orange);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+  .note {
+    background: #1a1500;
+    border-left: 3px solid var(--orange);
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  details { background: var(--bg-panel); border: 1px solid var(--border); border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+  details summary { color: var(--orange); cursor: pointer; font-weight: 600; }
+  footer { margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <nav>
+    <h2>zDPlayerLocation</h2>
+    <a href="#introduccion">Introducción</a>
+    <a href="#instalacion">Instalación</a>
+    <a href="#privacidad">Privacidad</a>
+    <a href="#paises">Países (tag/color/estilo)</a>
+    <a href="#display">Tab, bienvenida y despedida</a>
+    <a href="#cache">Caché de resultados</a>
+    <a href="#placeholders">Placeholders</a>
+    <a href="#comandos">Comandos</a>
+    <a href="#permisos">Permisos</a>
+    <a href="#compatibilidad">Compatibilidad</a>
+    <a href="#soporte">Soporte</a>
+  </nav>
+  <main>
+    <div class="hero">
+      <h1>zDPlayerLocation</h1>
+      <p class="subtitle">versión 1.0.0 — por Donatier</p>
+      <p class="lead">
+        Un plugin chico pensado para una sola cosa: mostrar de qué país es cada jugador,
+        con la etiqueta, el color y el estilo que vos quieras para cada uno — sin mostrarle
+        la IP a nadie, solo el resultado.
+      </p>
+      <div>
+        <span class="badge">Spigot</span>
+        <span class="badge">Paper</span>
+        <span class="badge">Purpur</span>
+        <span class="badge">Folia</span>
+        <span class="badge">1.16+</span>
+        <span class="badge">PlaceholderAPI (opcional)</span>
+      </div>
+    </div>
+
+    <h2 id="introduccion">Introducción</h2>
+    <p>
+      Al entrar un jugador, el plugin resuelve su país a partir de su IP y arma una
+      etiqueta como <code>[VNZ]</code> o <code>[MX]</code> — la ponés en el tab, en el
+      mensaje de bienvenida, o la usás como placeholder en cualquier otro plugin. Los 199
+      países vienen todos listados en <code>config.yml</code> para que edites cada uno a tu
+      gusto: la etiqueta, el color, y si va en negrita, cursiva o subrayado.
+    </p>
+
+    <h2 id="instalacion">Instalación</h2>
+    <ol>
+      <li>Descarga <code>zDPlayerLocation-1.0.0.jar</code>.</li>
+      <li>Colócalo en <code>/plugins</code>.</li>
+      <li>Reinicia el servidor. Se genera <code>config.yml</code> y <code>cache.yml</code> dentro de <code>/plugins/zDPlayerLocation</code>.</li>
+      <li>Editá los países que quieras y usá <code>/zdpl reload</code>.</li>
+    </ol>
+
+    <h2 id="privacidad">Privacidad</h2>
+    <p>
+      Para saber de qué país es alguien, el plugin le manda su IP a un servicio externo
+      gratuito de geolocalización (<code>ip-api.com</code> por defecto, configurable en
+      <code>geolocation.api-url</code>). No manda ningún otro dato del jugador, y lo que
+      guarda es solo el código de país — nunca la IP en sí. Si tu jugador se conecta desde
+      una red local (127.0.0.1, LAN), el plugin lo detecta solo y no hace ninguna consulta
+      externa, usando directamente la etiqueta <code>local</code>.
+    </p>
+    <div class="note">El país se vuelve a consultar en <strong>cada conexión</strong>, nunca se queda pegado a uno viejo — si un jugador cambia de red o de país entre una sesión y otra, se nota apenas se vuelve a conectar.</div>
+
+    <h2 id="paises">Países (nombre / tag / degradado / estilo)</h2>
+    <p>Cada país tiene su propio bloque, completamente editable:</p>
+    <pre>countries:
+  VE: # Venezuela
+    name: "Venezuela"
+    tag: "VNZ"
+    gradient: ["#F9EF80", "#6BD1FA", "#E65151"]
+    small-caps: true
+    bold: true
+    italic: false
+    underline: false</pre>
+    <p>
+      <code>gradient</code> es una lista de 1 o más colores hexadecimal: con uno solo queda
+      liso, con dos o más el plugin interpola el color letra por letra, de punta a punta del
+      tag — así es como sale el efecto de <code>VNZ</code> con cada letra de un color
+      distinto. <code>small-caps</code> convierte el tag a versalitas (mayúsculas pequeñas,
+      como <code>ᴠɴᴢ</code>) automáticamente; no hace falta escribirlas así vos mismo, solo
+      escribí <code>"VNZ"</code> normal. <code>name</code> es el nombre completo del país,
+      sin color ni estilo — para cuando querés mostrarlo "normal" en vez del tag.
+    </p>
+    <p>
+      <code>default</code> se usa para cualquier país que no esté en la lista o cuando falla
+      la consulta; <code>local</code> es la que se le pone a alguien conectado desde una red
+      local.
+    </p>
+    <div class="note">
+      Los 199 países están cargados de fábrica, todos con nombre en español, tag y degradado.
+      Le puse colores de bandera reales a los más pedidos (toda Latinoamérica, España, Estados
+      Unidos, Alemania, Francia, Italia, Reino Unido, Rusia, China, Japón, India, Canadá...).
+      Al resto le tocó un degradado genérico de 2 tonos para que no quedaran todos lisos — si
+      querés que algún país en particular tenga los colores reales de su bandera, decime cuál
+      y se lo cambio.
+    </div>
+
+    <h2 id="display">Tab, bienvenida y despedida</h2>
+    <pre>display:
+  format: "&8&0((%tag%&8&0))"
+  tab-suffix-enabled: true
+  join-message-enabled: true
+  join-message: "&a+ &7%player% &7se conectó desde &8&0((%tag%&8&0))"
+  leave-message-enabled: false
+  leave-message: "&c- &7%player% &7se desconectó."</pre>
+    <p>
+      <code>%tag%</code> ya viene coloreado y con el estilo de ese país aplicado;
+      <code>%name%</code> es el nombre del país en texto plano, sin color, para cuando
+      preferís mostrar "Venezuela" en vez de "((VNZ))". <code>tab-suffix-enabled</code>
+      agrega el resultado al final del nombre en la lista de jugadores (tab). El mensaje de
+      bienvenida y el de despedida se activan y redactan por separado.
+    </p>
+
+    <h2 id="cache">Respaldo si falla la consulta</h2>
+    <p>
+      El país se resuelve de nuevo cada vez que alguien se conecta - nunca se usa un
+      resultado viejo como atajo. <code>cache.yml</code> solo entra en juego como respaldo:
+      si en un momento dado la consulta a internet falla (sin conexión, servicio caído), el
+      plugin usa el último país que sí pudo resolver para ese jugador, mientras no sea más
+      viejo que <code>geolocation.cache-hours</code> horas.
+    </p>
+    <pre>geolocation:
+  cache-hours: 720
+  local-ip-country-code: "LOCAL"</pre>
+
+    <h2 id="placeholders">Placeholders</h2>
+    <p>Si tenés <a href="#compatibilidad">PlaceholderAPI</a> instalado, quedan disponibles automáticamente:</p>
+    <table>
+      <tr><th>Placeholder</th><th>Muestra</th></tr>
+      <tr><td><code>%zdplayerlocation_country%</code></td><td>El resultado completo ya formateado, ej. <code>((VNZ))</code> con su degradado.</td></tr>
+      <tr><td><code>%zdplayerlocation_tag%</code></td><td>Solo el tag con su degradado y estilo, sin los paréntesis del formato, ej. <code>VNZ</code> coloreado.</td></tr>
+      <tr><td><code>%zdplayerlocation_name%</code></td><td>Nombre completo del país en español, sin color, ej. <code>Venezuela</code>.</td></tr>
+      <tr><td><code>%zdplayerlocation_code%</code></td><td>Código ISO crudo devuelto por la consulta, ej. <code>VE</code>.</td></tr>
+    </table>
+    <p>Podés usarlas en el chat de otro plugin, en el tab de otro plugin de tablist, en un menú, donde quieras que acepte placeholders de PlaceholderAPI.</p>
+
+    <h2 id="comandos">Comandos</h2>
+    <table>
+      <tr><th>Comando</th><th>Descripción</th><th>Permiso</th></tr>
+      <tr><td><code>/zdpl reload</code></td><td>Recarga config.yml (valida la sintaxis antes).</td><td>zdplayerlocation.reload</td></tr>
+      <tr><td><code>/zdpl lookup [jugador]</code></td><td>Muestra el país de un jugador (o el tuyo si no pones ninguno).</td><td>zdplayerlocation.lookup / .lookup.others</td></tr>
+      <tr><td><code>/zdpl list</code></td><td>Lista el país de todos los jugadores conectados.</td><td>-</td></tr>
+      <tr><td><code>/zdpl author</code></td><td>Muestra el autor y la versión.</td><td>-</td></tr>
+    </table>
+    <p>Alias: <code>/zdpl</code>, <code>/zdloc</code>, <code>/location</code>.</p>
+
+    <h2 id="permisos">Permisos</h2>
+    <table>
+      <tr><th>Permiso</th><th>Función</th></tr>
+      <tr><td>zdplayerlocation.*</td><td>Otorga todos los permisos.</td></tr>
+      <tr><td>zdplayerlocation.reload</td><td>Permite recargar la configuración.</td></tr>
+      <tr><td>zdplayerlocation.lookup</td><td>Permite consultar tu propio país.</td></tr>
+      <tr><td>zdplayerlocation.lookup.others</td><td>Permite consultar el país de otros jugadores.</td></tr>
+      <tr><td>zdplayerlocation.see-tag</td><td>Reservado para futuras opciones de visibilidad por jugador.</td></tr>
+    </table>
+
+    <h2 id="compatibilidad">Compatibilidad</h2>
+    <p>
+      Compilado contra la API de Spigot (no la de Paper), así que corre igual en Spigot,
+      Paper, Purpur o Folia desde la 1.16 en adelante, sin usar ninguna función exclusiva de
+      Paper. Si tenés <strong>PlaceholderAPI</strong> instalado, el plugin lo detecta solo al
+      arrancar y registra sus placeholders; si no lo tenés, simplemente no hace nada raro,
+      el resto del plugin funciona igual.
+    </p>
+
+    <details>
+      <summary>Para desarrolladores: compilar desde el código fuente</summary>
+      <p style="margin-top:10px;">Si en vez del .jar descargaste el código fuente:</p>
+      <pre>cd zDPlayerLocation
+mvn clean package</pre>
+      <p>El archivo final queda en <code>target/zDPlayerLocation-1.0.0.jar</code>.</p>
+      <div class="note">Requiere Java 17+ y conexión a internet la primera vez, para que Maven descargue las dependencias.</div>
+    </details>
+
+    <h2 id="soporte">Soporte</h2>
+    <p>
+      Si algo no anda o se te ocurre algo que le falta, avisame con la versión del plugin,
+      el software de tu servidor y los pasos para reproducirlo.
+    </p>
+
+    <footer>zDPlayerLocation v1.0.0 — hecho por Donatier</footer>
+  </main>
+</div>
+</body>
+</html>
